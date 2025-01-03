@@ -1,2 +1,3 @@
-# NewProjects
-Data Science projects
+# Apartment Prices in Poland
+
+Data Science project
