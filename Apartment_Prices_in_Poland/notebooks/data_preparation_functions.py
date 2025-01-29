@@ -120,23 +120,9 @@ def encode_cat_columns(df,cat_columns):
     return df, ohe_cat
 
 
+# FUNCTIONS PER CITY
 
-#  MAIN FUNCTIONS
-
-def prepare_data_per_city(df, city):
-
-  #FILTER BY CITY
-
-  df = df[df['city'] == city]
-
-  # REMOVE FEATURES
-
-  df = df.drop(columns=['id', 'ownership',  'rooms', 'hasSecurity', 'hasStorageRoom', 'buildingMaterial', 'schoolDistance', 'restaurantDistance', 'postOfficeDistance'])
-
-  # Add price_per_m2 column
-  df['price_per_m2'] = (df['price'] / df['squareMeters']).round(0)
-
-  # FILL MISSING VALUES
+def fill_na_per_city(df):
 
   df = fill_na_in_type(df)
 
@@ -160,8 +146,11 @@ def prepare_data_per_city(df, city):
   for col in distance_columns:
       df[col] = df[col].fillna(df[col].mean())
 
+  return df
 
-  # HANDLE OUTLIERS
+
+
+def handle_outliers_per_city(df):
 
   lower_limit = df['buildYear'].le(1919).mean()
   df['buildYear'] = winsorize(df['buildYear'], limits=(lower_limit, 0))
@@ -176,17 +165,9 @@ def prepare_data_per_city(df, city):
   return df
 
 
+# FUNCTIONS FOR WHOLE DATASET
 
-
-def prepare_data_whole_dataset(df):
-
-
-  # REMOVE FEATURES
-
-  df = df.drop(columns=['price', 'price_per_m2', 'locationCategory', 'floorCount'])
-
-
-  # SPLIT DATA INTO BINS
+def split_and_save_bins(df):
 
   distance_columns = [col for col in df.columns if 'Distance' in col]
 
@@ -203,9 +184,10 @@ def prepare_data_whole_dataset(df):
     "centre_distance_bins": centre_distance_bins
   }
 
-  df = df.drop_duplicates()
+  return df, bins_to_save
 
-  # ENCODE CATEGORICAL COLUMNS
+
+def encode_and_save_encoder(df):
 
   df, ohe_city = encode_city_column(df, 'city')
 
@@ -218,7 +200,4 @@ def prepare_data_whole_dataset(df):
         'cat_column_encoder': ohe_cat
     }
 
-
-
-
-  return df, bins_to_save, ohe_dict
+  return df, ohe_dict
