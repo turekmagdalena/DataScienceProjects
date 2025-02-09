@@ -3,8 +3,9 @@
 Project focused on predicting price of an apartament in Poland.
 
 
-Project Architecture
+## Project Architecture
 
+```bash
 ├── config
 ├── data
 │   ├── processed
@@ -14,4 +15,4 @@ Project Architecture
 ├── notebooks
 │   ├── all_cities
 │   └── krakow
-
+```
