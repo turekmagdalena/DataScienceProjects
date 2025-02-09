@@ -1,6 +1,12 @@
 # Apartment Prices in Poland
 
-Project focused on predicting price of an apartament in Poland.
+Apartment prices in Poland have been rising steadily, making it difficult for many people to decide where and what kind of apartment they can afford. This project aims to provide a simple tool that predicts apartment prices based on location and key property parameters. By selecting a city and specifying apartment details, users can receive an estimated price per square meter, helping them explore affordability and make informed decisions about potential purchases.
+
+### Objective
+* Develop a predictive model that estimates apartment prices based on location and apartment features.
+* Provide an easy-to-use interface for users to input key details.
+* Help users determine where they may want to move or what type of apartment fits their budget.
+
 
 ## Table of Contents
 
