@@ -40,5 +40,20 @@ Apartment prices in Poland have been rising steadily, making it difficult for ma
 * [raw](data/raw): original datasets
   * [apartments_pl_2024_06.csv](data/raw/apartments_pl_2024_06.csv): original dataset with apartment prices from June 2024
 
+[models](models): folder containing trained algorithms
+* [encoders.pkl](models/encoders.pkl): trained OneHotEncoder for all categorical columns
+* [xgboost_all_cities.pkl](models/xgboost_all_cities.pkl): XGBoost model trained on data for all cities
+* [xgboost_krakow.pkl](models/xgboost_krakow.pkl): XGBoost model trained on data for city of Krakow
 
+[notebooks](notebooks): folder containing notebooks with all project steps
+* [all_cities](notebooks/all_cities): notebooks for processing dataset with all cities included
+  * [create_model_for_all_cities.ipynb](notebooks/all_cities/create_model_for_all_cities.ipynb): notebook with use of pre-defined functions for data preparation and model training for dataset with all cities included
+  * [data_preparation_functions.py](notebooks/all_cities/data_preparation_functions.py): functions for feature selection and engineering
+  * [prediction_app.ipynb](notebooks/all_cities/prediction_app.ipynb): notebook with the application that makes a prediction based on user's input
+* [krakow](notebooks/krakow): notebooks for processing dataset filtered by city of Krakow
+  * [1_data_and_feature_preparation.ipynb](notebooks/krakow/1_data_and_feature_preparation.ipynb): notebook with data exploration and preparation based on dataset filtered by city of Krakow
+  * [2_model_training_and_evaluation.ipynb](notebooks/krakow/2_model_training_and_evaluation.ipynb): notebook with steps for training and selecting the best model
+ 
+
+  
 ## Executive Summary
