@@ -16,6 +16,7 @@ import numpy as np
 # HELPER FUNCTIONS
 
 def categorize_location(df):
+  """Use latitude and longitude columns to create locationCategory"""
   # Approximate conversion factors
   LATITUDE_TO_METERS = 111_111  # 1 degree latitude in meters
   LONGITUDE_TO_METERS = 111_111 * np.cos(np.radians(50))  # Adjust for latitude
@@ -31,15 +32,14 @@ def categorize_location(df):
   # Encode location categories to numbers
   df['locationCategory'] = pd.factorize(df['locationCategory'])[0] + 1  # Start encoding from 1
 
-  # Drop columns that are no longer necessary
   df = df.drop(columns=['latitude', 'longitude','lat_index', 'lon_index'])
 
   return df
 
 
-
 def fill_na_in_type(df):
-    # Calculate global most popular type
+  """Fill missing values in 'type' column using buildYear and locationCategory"""
+  # Calculate global most popular type
   pop_type = df['type'].value_counts().idxmax()
 
   # Calculate most popular type within buildYear and locationCategory
@@ -66,7 +66,7 @@ def fill_na_in_type(df):
   df_merged["dominant_type"] = df_merged["dominant_type"].fillna(pop_type)
 
   # # Fill missing values in original DataFrame using new column
-  df = df.reset_index(drop=True)  # Reset index to align
+  df = df.reset_index(drop=True)
   df_merged = df_merged.reset_index(drop=True)
   df['type'] = df['type'].fillna(df_merged['dominant_type'])
 
@@ -74,6 +74,18 @@ def fill_na_in_type(df):
 
 
 def split_into_bins(df, columns):
+  """Split numerical columns into 10 bins, using max value among all columns.
+
+  Parameters:
+  df: DataFrame with columns to split
+  columns: List of column names to split
+
+  Returns:
+  df: DataFrame with split columns
+  bins: List of bin edges
+
+  """
+
   max_column = df[columns].max().idxmax()
   max_val = df[max_column].max()
 
@@ -88,6 +100,17 @@ def split_into_bins(df, columns):
 
 
 def encode_city_column(df, city_column):
+  """Perform OneHotEnconding on city column. Keep all city options as features.
+
+  Parameters:
+  df: DataFrame with city column to encode
+  city_column: Name of the city column
+
+  Returns:
+  df: DataFrame with encoded city column
+  ohe_city: OneHotEncoder object for city column
+  """
+
     # Initialize OneHotEncoder for city
     ohe_city = OneHotEncoder(sparse_output=False, handle_unknown='ignore')
     encoded_city_array = ohe_city.fit_transform(df[[city_column]])
@@ -104,14 +127,25 @@ def encode_city_column(df, city_column):
     return df, ohe_city
 
 def encode_cat_columns(df,cat_columns):
+  """Perform OneHotEnconding on categorical columns. Drop first column.
 
+  Parameters:
+  df: DataFrame with columns to encode
+  cat_columns: List of column names to encode
+
+  Returns:
+  df: DataFrame with encoded categorical columns
+  ohe_cat: OneHotEncoder object for categorical columns
+  """
+
+    # Initialize OneHotEncoder for categorical columns
     ohe_cat = OneHotEncoder(drop='first', sparse_output=False, handle_unknown='ignore')
     encoded_other_array = ohe_cat.fit_transform(df[cat_columns])
 
-    # Get column names for the encoded features of other columns
+    # Get column names for the encoded features of categorical columns
     encoded_other_feature_names = ohe_cat.get_feature_names_out(cat_columns)
 
-    # Create a DataFrame with the encoded columns for other categorical columns
+    # Create a DataFrame with the encoded columns for categorical columns
     encoded_other_df = pd.DataFrame(encoded_other_array, columns=encoded_other_feature_names, index=df.index)
 
     # Concatenate the encoded columns with the original DataFrame (drop the original categorical columns)
@@ -120,10 +154,10 @@ def encode_cat_columns(df,cat_columns):
     return df, ohe_cat
 
 
-# FUNCTIONS PER CITY
+# FUNCTIONS PER CITY - functions that should be performed separately for each city
 
 def fill_na_per_city(df):
-
+  """Fill missing values based on statistical measures. The input DataFrame should be pre-filtered for a single city."""
   df = fill_na_in_type(df)
 
   df["buildYear"] = df.groupby("type")["buildYear"].transform(
@@ -151,7 +185,7 @@ def fill_na_per_city(df):
 
 
 def handle_outliers_per_city(df):
-
+  """Handle outliers in the dataset using winsorization and log transformation.The input DataFrame should be pre-filtered for a single city."""
   lower_limit = df['buildYear'].le(1919).mean()
   df['buildYear'] = winsorize(df['buildYear'], limits=(lower_limit, 0))
 
@@ -168,14 +202,23 @@ def handle_outliers_per_city(df):
 # FUNCTIONS FOR WHOLE DATASET
 
 def split_and_save_bins(df):
+  """Split Distance columns into 10 bins, using max value among all columns.
+
+  Parameters:
+  df: DataFrame with columns to split
+
+  Returns:
+  df: DataFrame with split columns
+  bins_to_save: Dictionary with bin edges
+  """
 
   distance_columns = [col for col in df.columns if 'Distance' in col]
 
-  distance_columns.remove('centreDistance')
+  distance_columns.remove('centreDistance') #centreDistance column has wider range and should be split separately
 
   df, distance_bins = split_into_bins(df, distance_columns)
 
-  df['centreDistance'] = winsorize(df['centreDistance'], limits=(0, 0.05))
+  df['centreDistance'] = winsorize(df['centreDistance'], limits=(0, 0.05)) #handle outliers
 
   df, centre_distance_bins = split_into_bins(df, ['centreDistance'])
 
@@ -188,6 +231,15 @@ def split_and_save_bins(df):
 
 
 def encode_and_save_encoder(df):
+  """Perform OneHotEnconding on categorical columns. Treat separately city column.
+
+  Parameters:
+  df: DataFrame with columns to encode
+
+  Returns:
+  df: DataFrame with encoded categorical columns
+  ohe_dict: Dictionary with OneHotEncoder objects for categorical columns
+  """
 
   df, ohe_city = encode_city_column(df, 'city')
 
