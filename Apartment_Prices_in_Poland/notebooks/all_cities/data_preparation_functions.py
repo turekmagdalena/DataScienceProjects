@@ -111,20 +111,20 @@ def encode_city_column(df, city_column):
   ohe_city: OneHotEncoder object for city column
   """
 
-    # Initialize OneHotEncoder for city
-    ohe_city = OneHotEncoder(sparse_output=False, handle_unknown='ignore')
-    encoded_city_array = ohe_city.fit_transform(df[[city_column]])
+  # Initialize OneHotEncoder for city
+  ohe_city = OneHotEncoder(sparse_output=False, handle_unknown='ignore')
+  encoded_city_array = ohe_city.fit_transform(df[[city_column]])
 
-    # Get column names for the encoded features of 'city'
-    encoded_city_feature_names = ohe_city.get_feature_names_out([city_column])
+  # Get column names for the encoded features of 'city'
+  encoded_city_feature_names = ohe_city.get_feature_names_out([city_column])
 
-    # Create a DataFrame with the encoded columns for 'city'
-    encoded_city_df = pd.DataFrame(encoded_city_array, columns=encoded_city_feature_names, index=df.index)
+  # Create a DataFrame with the encoded columns for 'city'
+  encoded_city_df = pd.DataFrame(encoded_city_array, columns=encoded_city_feature_names, index=df.index)
 
-    # Concatenate the encoded columns with the original DataFrame (drop the original 'city' column)
-    df = pd.concat([df.drop(columns=[city_column]), encoded_city_df], axis=1)
+  # Concatenate the encoded columns with the original DataFrame (drop the original 'city' column)
+  df = pd.concat([df.drop(columns=[city_column]), encoded_city_df], axis=1)
 
-    return df, ohe_city
+  return df, ohe_city
 
 def encode_cat_columns(df,cat_columns):
   """Perform OneHotEnconding on categorical columns. Drop first column.
@@ -138,20 +138,20 @@ def encode_cat_columns(df,cat_columns):
   ohe_cat: OneHotEncoder object for categorical columns
   """
 
-    # Initialize OneHotEncoder for categorical columns
-    ohe_cat = OneHotEncoder(drop='first', sparse_output=False, handle_unknown='ignore')
-    encoded_other_array = ohe_cat.fit_transform(df[cat_columns])
+  # Initialize OneHotEncoder for categorical columns
+  ohe_cat = OneHotEncoder(drop='first', sparse_output=False, handle_unknown='ignore')
+  encoded_other_array = ohe_cat.fit_transform(df[cat_columns])
 
-    # Get column names for the encoded features of categorical columns
-    encoded_other_feature_names = ohe_cat.get_feature_names_out(cat_columns)
+  # Get column names for the encoded features of categorical columns
+  encoded_other_feature_names = ohe_cat.get_feature_names_out(cat_columns)
 
-    # Create a DataFrame with the encoded columns for categorical columns
-    encoded_other_df = pd.DataFrame(encoded_other_array, columns=encoded_other_feature_names, index=df.index)
+  # Create a DataFrame with the encoded columns for categorical columns
+  encoded_other_df = pd.DataFrame(encoded_other_array, columns=encoded_other_feature_names, index=df.index)
 
-    # Concatenate the encoded columns with the original DataFrame (drop the original categorical columns)
-    df = pd.concat([df.drop(columns=cat_columns), encoded_other_df], axis=1)
+  # Concatenate the encoded columns with the original DataFrame (drop the original categorical columns)
+  df = pd.concat([df.drop(columns=cat_columns), encoded_other_df], axis=1)
 
-    return df, ohe_cat
+  return df, ohe_cat
 
 
 # FUNCTIONS PER CITY - functions that should be performed separately for each city
@@ -178,7 +178,7 @@ def fill_na_per_city(df):
   distance_columns = [col for col in df.columns if 'Distance' in col]
 
   for col in distance_columns:
-      df[col] = df[col].fillna(df[col].mean())
+    df[col] = df[col].fillna(df[col].mean())
 
   return df
 
