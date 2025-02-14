@@ -2,11 +2,16 @@
 
 Apartment prices in Poland have been rising steadily, making it difficult for many people to decide where and what kind of apartment they can afford. This project aims to provide a simple tool that predicts apartment prices based on location and key property parameters. By selecting a city and specifying apartment details, users can receive an estimated price per square meter, helping them explore affordability and make informed decisions about potential purchases.
 
+The data was sourced from: https://www.kaggle.com/datasets/krzysztofjamroz/apartment-prices-in-poland
+
 ### Objective
 * Develop a predictive model that estimates apartment prices based on location and apartment features.
 * Provide an easy-to-use interface for users to input key details.
 * Help users determine where they may want to move or what type of apartment fits their budget.
 
+### Conclusions
+
+The most important factors influencing apartment prices are city and build year. Newer apartments tend to have significantly higher prices compared to older buildings. Additionally, for apartments with the same characteristics, prices in large cities like Warszawa or Kraków can be twice as high as in smaller cities such as Szczecin or Radom. This highlights the strong impact of urban demand and property age on real estate values.
 
 ## Table of Contents
 
@@ -53,7 +58,4 @@ Apartment prices in Poland have been rising steadily, making it difficult for ma
 * [krakow](notebooks/krakow): notebooks for processing dataset filtered by city of Krakow
   * [1_data_and_feature_preparation.ipynb](notebooks/krakow/1_data_and_feature_preparation.ipynb): notebook with data exploration and preparation based on dataset filtered by city of Krakow
   * [2_model_training_and_evaluation.ipynb](notebooks/krakow/2_model_training_and_evaluation.ipynb): notebook with steps for training and selecting the best model
- 
 
-  
-## Executive Summary
