@@ -1,6 +1,6 @@
 # Apartment Prices in Poland
 
-Apartment prices in Poland have been rising steadily, making it difficult for many people to decide where and what kind of apartment they can afford. This project aims to provide a simple tool that predicts apartment prices based on location and key property parameters. By selecting a city and specifying apartment details, users can receive an estimated price per square meter, helping them explore affordability and make informed decisions about potential purchases.
+Apartment prices in Poland have been rising steadily, making it difficult for many people to decide where and what kind of apartment they can afford. This project aims to provide a simple tool that predicts apartment prices based on location and key property parameters. By selecting a city and specifying apartment details, users can receive an estimated price per square meter, helping them explore affordability and make informed decisions about potential purchases. Additionally, the application allows users to evaluate whether their current property has increased in value, giving them insights into market trends and potential resale opportunities.
 
 The data was sourced from: https://www.kaggle.com/datasets/krzysztofjamroz/apartment-prices-in-poland
 
@@ -32,9 +32,12 @@ The most important factors influencing apartment prices are city and build year.
 ├── notebooks
 │   ├── all_cities
 │   └── krakow
+├── tests
+│   └── test_data
 ```
 
 ## File Descriptions
+<details>
 [config](config): folder containing configuration files
 * [bins.json](config/bins.json): bins used for splitting data in 'distance' columns. File is used for feature engineering new data from user.
 
@@ -59,3 +62,49 @@ The most important factors influencing apartment prices are city and build year.
   * [1_data_and_feature_preparation.ipynb](notebooks/krakow/1_data_and_feature_preparation.ipynb): notebook with data exploration and preparation based on dataset filtered by city of Krakow
   * [2_model_training_and_evaluation.ipynb](notebooks/krakow/2_model_training_and_evaluation.ipynb): notebook with steps for training and selecting the best model
 
+[tests](tests): folder containing test cases and test data
+* [test_data](tests/test_data): cvs files containing sample data for testing
+  * [sample.csv](test_data/tests/sample.csv): csv file containing raw sample data
+  * [sample_processed.csv](test_data/tests/sample_processed.csv): csv file containing processed sample data with no missing values
+* [test_data_preparation_functions.py](tests/test_data_preparation_functions.py): file containing unit tests for [data_preparation_functions.py](notebooks/all_cities/data_preparation_functions.py)
+</details>
+
+## Executive Summary
+
+### Data Collection
+<details>
+The dataset consists of apartment listings across Poland from June 2024, including features such as:
+location, build year, building type, condition, floor details, proximity to Points of Interest (POIs) and city centre, additional features like parking space or balcony etc. 
+The data was sourced from https://www.kaggle.com/datasets/krzysztofjamroz/apartment-prices-in-poland and contained missing values and outliers that required preprocessing.
+
+The original dataset consists of following columns:
+* *city* - the name of the city where the property is located
+* *type* - type of the building
+* *squareMeters* - the size of the apartment in square meters
+* *rooms* - number of rooms in the apartment
+* *floor / floorCount* - the floor where the apartment is located and the total number of floors in the building
+* *buildYear* - the year when the building was built
+* *latitude, longitude* - geo coordinate of the property
+* *centreDistance* - distance from the city centre in km
+* *poiCount* - number of points of interest in 500m range from the apartment (schools, clinics, post offices, kindergartens, restaurants, colleges, pharmacies)
+* *[poiName]Distance* - distance to the nearest point of interest (schools, clinics, post offices, kindergartens, restaurants, colleges, pharmacies)
+* *ownership* - the type of property ownership
+* *condition* - the condition of the apartment
+* *has[features]* - whether the property has key features such as assigned parking space, balcony, elevator, security, storage room
+* *price* - offer price in Polish Zloty
+</details>
+
+### Data Cleaning and Preprocessing
+<details>
+
+
+To simplify preprocessing and model development, I focused on one city (Kraków) instead of the entire dataset. This reduced computational complexity and allowed for a more detailed analysis of local patterns before scaling the model.  
+
+**The data cleaning process included:**  
+* **Feature Engineering** – Created new columns, including `locationCategory` (based on latitude and longitude) and `price_per_m2`. Split distance columns into bins.  
+* **Handling Missing Values** – Imputed missing values using statistical measures (mean, mode, median).  
+* **Outlier Detection & Removal** – Winsorized extreme values in `price_per_m2`, `buildYear`, `squareMeters`, and `poiCount`. Applied log transformation to `price_per_m2` for normalization.  
+* **Feature Selection** – Removed columns that could lead to data leakage, were highly correlated with other features, or were quasi-constant. Verified important features using **Random Forest Feature Importances**, **Recursive Feature Elimination (RFE)**, and **Forward Feature Selection**.  
+* **Encoding** – Used **OneHotEncoder** to convert categorical variables into numerical formats.  
+
+</details>
