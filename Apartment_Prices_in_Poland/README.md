@@ -138,7 +138,7 @@ Given the balance between accuracy and efficiency, **XGBoost was selected as the
 
 ### Scaling Model to the Full Dataset  
 <details>
-After selecting **XGBoost** as the best model based on one city's data, I scaled the data preparation and model creation for the entire dataset. To ensure consistency and efficiency, I developed **data preparation functions** that automated key preprocessing steps, including data cleaning, feature selection, and feature engineering.  
+After selecting XGBoost as the best model based on one city's data, I scaled the data preparation and model creation for the entire dataset. To ensure consistency and efficiency, I developed data preparation functions that automated key preprocessing steps, including data cleaning, feature selection, and feature engineering.  
 
 I then trained an **XGBoost model** on the full dataset, achieving the following results:  
 
@@ -155,7 +155,7 @@ To enable future predictions with the same preprocessing logic, I saved the bins
 
 ### Prediction App  
 <details>
-To make the model accessible and user-friendly, I created a **simple Dash web app** where users can select city and other apartment features, and the app returns the predicted price per m², based on the trained XGBoost model.  
+To make the model accessible and user-friendly, I created a simple Dash web app where users can select city and other apartment features, and the app returns the predicted price per m², based on the trained XGBoost model.  
 
 A recording of the app in action is available **[here]**.  
 </details>
