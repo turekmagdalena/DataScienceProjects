@@ -108,3 +108,23 @@ To simplify preprocessing and model development, I focused on one city (Kraków)
 * **Encoding** – Used **OneHotEncoder** to convert categorical variables into numerical formats.  
 
 </details>
+
+### Model Selection  
+
+To determine the most suitable model for predicting apartment prices per square meter, I trained and evaluated three different algorithms: **Linear Regression (LR), Random Forest (RF), and XGBoost (XGB)**. The models were assessed based on **prediction time, Mean Absolute Error (MAE), and R² score** on the test set.  
+
+| Model              | Prediction Time (s) | Test MAE  | R² Score  |
+|--------------------|--------------------|----------|----------|
+| **Linear Regression** | 0.0148             | 0.1138  | 0.4790   |
+| **Random Forest**   | 0.0766             | 0.0886  | 0.6314   |
+| **XGBoost**        | 0.0104             | 0.0898  | 0.6259   |
+
+#### Key Observations:
+- **Linear Regression** had the weakest predictive performance, with the highest MAE and lowest R² score.  
+- **Random Forest** had the best R² and lowest MAE, but it also had the longest prediction time.  
+- **XGBoost** performed comparably to Random Forest, with a slightly higher MAE and slightly lower R², but had the fastest prediction time among the tree-based models.  
+
+#### Model Choice:
+Given the balance between accuracy and efficiency, **XGBoost was selected as the final model**. While its R² was slightly lower than Random Forest, it provided similar predictive performance with a **notably faster prediction time**, making it a more scalable choice for future expansion.  
+
+**Current Scope:** All evaluations and model training were conducted on **data from a single city (Kraków)**. 
