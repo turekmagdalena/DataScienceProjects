@@ -147,7 +147,15 @@ I then trained an **XGBoost model** on the full dataset, achieving the following
 * **Mean Absolute Error (MAE):** 0.1017
 
 To validate the model and prevent **data leakage**, I analyzed **Feature Importances** using a chart. This helped ensure that no single feature dominated the predictions and allowed me to identify the most influential factors in apartment price estimation.  
+The chart below presents the Feature Importances for the entire dataset. It shows that the apartment's location, the building's construction year, and the property size have the most significant impact on price per m².
+<img src="images/feature_importances.PNG" alt="Feature Importances">
 
 To enable future predictions with the same preprocessing logic, I saved the bins used for splitting numerical features and stored the OneHotEncoders for categorical variables. This ensures that the model can handle new data in a consistent manner.
 </details>
 
+### Prediction App  
+<details>
+To make the model accessible and user-friendly, I created a **simple Dash web app** where users can select city and other apartment features, and the app returns the predicted price per m², based on the trained XGBoost model.  
+
+A recording of the app in action is available **[here]**.  
+</details>
