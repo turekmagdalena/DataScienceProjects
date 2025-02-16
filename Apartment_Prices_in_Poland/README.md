@@ -34,6 +34,7 @@ The most important factors influencing apartment prices are city and build year.
 ├── notebooks
 │   ├── all_cities
 │   └── krakow
+├── recordings
 ├── tests
 │   └── test_data
 ```
@@ -66,6 +67,9 @@ The most important factors influencing apartment prices are city and build year.
 * [krakow](notebooks/krakow): notebooks for processing dataset filtered by city of Krakow
   * [1_data_and_feature_preparation.ipynb](notebooks/krakow/1_data_and_feature_preparation.ipynb): notebook with data exploration and preparation based on dataset filtered by city of Krakow
   * [2_model_training_and_evaluation.ipynb](notebooks/krakow/2_model_training_and_evaluation.ipynb): notebook with steps for training and selecting the best model
+ 
+[recordings](recordings): folder containing recordings related to the project
+* [PredictionApp.mp4](recordings/PredictionApp.mp4): recording of Prediction App in action
 
 [tests](tests): folder containing test cases and test data
 * [test_data](tests/test_data): cvs files containing sample data for testing
@@ -159,5 +163,5 @@ To enable future predictions with the same preprocessing logic, I saved the bins
 <details>
 To make the model accessible and user-friendly, I created a simple Dash web app where users can select city and other apartment features, and the app returns the predicted price per m², based on the trained XGBoost model.  
 
-A recording of the app in action is available **[here]**.  
+A recording of the app in action is available **[here](recordings/PredictionApp.mp4)**.  
 </details>
