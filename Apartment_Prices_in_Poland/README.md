@@ -47,6 +47,9 @@ The most important factors influencing apartment prices are city and build year.
   * [processed_data_Krakow.csv](data/processed/processed_data_Krakow.csv): data filtered by city of Krakow and processed
 * [raw](data/raw): original datasets
   * [apartments_pl_2024_06.csv](data/raw/apartments_pl_2024_06.csv): original dataset with apartment prices from June 2024
+ 
+[images](images): folder containing images for documentation 
+* [model_comparison.png](images/model_comparison.png): png file with bar chart comparing MAE for 3 different models
 
 [models](models): folder containing trained algorithms
 * [encoders.pkl](models/encoders.pkl): trained OneHotEncoder for all categorical columns
@@ -110,7 +113,7 @@ To simplify preprocessing and model development, I focused on one city (Kraków)
 </details>
 
 ### Model Selection  
-
+<details>
 To determine the most suitable model for predicting apartment prices per square meter, I trained and evaluated three different algorithms: **Linear Regression (LR), Random Forest (RF), and XGBoost (XGB)**. The models were assessed based on **prediction time, Mean Absolute Error (MAE), and R² score** on the test set.  
 
 | Model              | Prediction Time (s) | Test MAE  | R² Score  |
@@ -120,11 +123,31 @@ To determine the most suitable model for predicting apartment prices per square 
 | **XGBoost**        | 0.0104             | 0.0898  | 0.6259   |
 
 #### Key Observations:
-- **Linear Regression** had the weakest predictive performance, with the highest MAE and lowest R² score.  
-- **Random Forest** had the best R² and lowest MAE, but it also had the longest prediction time.  
-- **XGBoost** performed comparably to Random Forest, with a slightly higher MAE and slightly lower R², but had the fastest prediction time among the tree-based models.  
+* **Linear Regression** had the weakest predictive performance, with the highest MAE and lowest R² score.  
+* **Random Forest** had the best R² and lowest MAE, but it also had the longest prediction time.  
+* **XGBoost** performed comparably to Random Forest, with a slightly higher MAE and slightly lower R², but had the fastest prediction time among the tree-based models.
+
+The chart below compares the Mean Absolute Error (MAE) for each model, highlighting their predictive performance.
+<img src="images/model_comparison.png" alt="Mean Absolute Error per model" width="400">
 
 #### Model Choice:
 Given the balance between accuracy and efficiency, **XGBoost was selected as the final model**. While its R² was slightly lower than Random Forest, it provided similar predictive performance with a **notably faster prediction time**, making it a more scalable choice for future expansion.  
 
 **Current Scope:** All evaluations and model training were conducted on **data from a single city (Kraków)**. 
+</details>
+
+### Scaling Model to the Full Dataset  
+<details>
+After selecting **XGBoost** as the best model based on one city's data, I scaled the data preparation and model creation for the entire dataset. To ensure consistency and efficiency, I developed **data preparation functions** that automated key preprocessing steps, including data cleaning, feature selection, and feature engineering.  
+
+I then trained an **XGBoost model** on the full dataset, achieving the following results:  
+
+* **Prediction Time:** 0.0401s  
+* **R² Score:** 0.8692  
+* **Mean Absolute Error (MAE):** 0.1017
+
+To validate the model and prevent **data leakage**, I analyzed **Feature Importances** using a chart. This helped ensure that no single feature dominated the predictions and allowed me to identify the most influential factors in apartment price estimation.  
+
+To enable future predictions with the same preprocessing logic, I saved the bins used for splitting numerical features and stored the OneHotEncoders for categorical variables. This ensures that the model can handle new data in a consistent manner.
+</details>
+
