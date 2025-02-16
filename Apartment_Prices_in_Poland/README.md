@@ -5,9 +5,10 @@ Apartment prices in Poland have been rising steadily, making it difficult for ma
 The data was sourced from: https://www.kaggle.com/datasets/krzysztofjamroz/apartment-prices-in-poland
 
 ### Objective
-* Develop a predictive model that estimates apartment prices based on location and apartment features.
-* Provide an easy-to-use interface for users to input key details.
-* Help users determine where they may want to move or what type of apartment fits their budget.
+* Develop a predictive model that estimates apartment prices based on location and apartment features.  
+* Provide an easy-to-use interface for users to input key details.  
+* Help users determine where they may want to move or what type of apartment fits their budget.  
+* Allow users to assess their property's value and track market trends.
 
 ### Conclusions
 
@@ -28,6 +29,7 @@ The most important factors influencing apartment prices are city and build year.
 │   ├── processed
 │   └── raw
 ├── docs
+├── images
 ├── models
 ├── notebooks
 │   ├── all_cities
