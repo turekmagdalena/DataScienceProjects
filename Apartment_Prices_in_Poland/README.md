@@ -63,6 +63,7 @@ The most important factors influencing apartment prices are city and build year.
 * [all_cities](notebooks/all_cities): notebooks for processing dataset with all cities included
   * [create_model_for_all_cities.ipynb](notebooks/all_cities/create_model_for_all_cities.ipynb): notebook with use of pre-defined functions for data preparation and model training for dataset with all cities included
   * [data_preparation_functions.py](notebooks/all_cities/data_preparation_functions.py): functions for feature selection and engineering
+  * [exploratory_data_analysis.ipynb](notebooks/all_cities/exploratory_data_analysis.ipynb): exploratory data analysis for whole dataset
   * [prediction_app.ipynb](notebooks/all_cities/prediction_app.ipynb): notebook with the application that makes a prediction based on user's input
 * [krakow](notebooks/krakow): notebooks for processing dataset filtered by city of Krakow
   * [1_data_and_feature_preparation.ipynb](notebooks/krakow/1_data_and_feature_preparation.ipynb): notebook with data exploration and preparation based on dataset filtered by city of Krakow
