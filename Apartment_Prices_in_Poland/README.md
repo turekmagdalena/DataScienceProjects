@@ -1,5 +1,7 @@
 # Apartment Prices in Poland
 
+**TL;DR**: A model predicting apartment prices in Poland, with an average error of about 10% per square meter. Simple app for users to input data and get a price prediction.
+![alt-text](recordings/prediction_app_gif.gif)
 Apartment prices in Poland have been rising steadily, making it difficult for many people to decide where and what kind of apartment they can afford. This project aims to provide a simple tool that predicts apartment prices based on location and key property parameters. By selecting a city and specifying apartment details, users can receive an estimated price per square meter, helping them explore affordability and make informed decisions about potential purchases. Additionally, the application allows users to evaluate whether their current property has increased in value, giving them insights into market trends and potential resale opportunities.
 
 The data was sourced from: https://www.kaggle.com/datasets/krzysztofjamroz/apartment-prices-in-poland
@@ -71,6 +73,7 @@ The most important factors influencing apartment prices are city and build year.
  
 [recordings](recordings): folder containing recordings related to the project
 * [PredictionApp.mp4](recordings/PredictionApp.mp4): recording of Prediction App in action
+* [prediction_app_gif.gif](recordings/prediction_app_gif.gif): gif file of Prediction App in action
 
 [tests](tests): folder containing test cases and test data
 * [test_data](tests/test_data): cvs files containing sample data for testing
@@ -121,7 +124,7 @@ To simplify preprocessing and model development, I focused on one city (Kraków)
 
 ### Model Selection  
 <details>
-To determine the most suitable model for predicting apartment prices per square meter, I trained and evaluated three different algorithms: **Linear Regression (LR), Random Forest (RF), and XGBoost (XGB)**. The models were assessed based on **prediction time, Mean Absolute Error (MAE), and R² score** on the test set.  
+To determine the most suitable model for predicting apartment prices per square meter, I trained and evaluated three different algorithms: Linear Regression (LR), Random Forest (RF), and XGBoost (XGB). The models were assessed based on prediction time, Mean Absolute Error (MAE), and R² score on the test set.  
 
 | Model              | Prediction Time (s) | Test MAE  | R² Score  |
 |--------------------|--------------------|----------|----------|
